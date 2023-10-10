@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "booking"
+version = "0.1.0"
+description = ""
+authors = ["AlexanderRemizov <alvrem@mail.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = {extras = ["all"], version = "^0.103.2"}
+gunicorn = "^21.2.0"
+sqlalchemy = "^2.0.21"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
