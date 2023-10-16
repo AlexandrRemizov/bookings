@@ -9,7 +9,7 @@ class Hotels(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     location = Column(String, nullable=False)
-    service = Column(JSON)
+    services = Column(JSON)
     rooms_quantity = Column(Integer, nullable=False)
     image_id = Column(Integer)
 
