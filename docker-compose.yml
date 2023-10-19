@@ -9,18 +9,49 @@ services:
       - .env
     ports:
       - 5432:5432
+
+  redis:
+    image: redis:7
+    container_name: booking_redis
+
   booking:
     build:
       context: .
-    volumes:
-      - .:/booking
+    #volumes:
+    #  - .:/booking
     container_name: booking_app
     env_file:
       - .env
     depends_on:
       - db
+      - redis
     command: sh -c "chmod a+x docker/*.sh && docker/app.sh"
     ports:
       - 7777:8000
+
+  celery:
+    image: booking_celery
+    build:
+      context: .
+    container_name: booking_celery
+    command: sh -c "chmod a+x docker/*.sh && docker/celery_flower_run.sh celery"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+
+  flower:
+    image: booking_flower
+    build:
+      context: .
+    container_name: booking_flower
+    command: sh -c "chmod a+x docker/*.sh && docker/celery_flower_run.sh flower"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    ports:
+      - 5555:5555
+
 volumes:
   postgresdata:

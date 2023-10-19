@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from pydantic import parse_obj_as
 
+from app.tasks.tasks import send_booking_confirmation_email
 from app.bookings.dao import BookingDAO
 from app.bookings.schemas import SBookingInfo, SNewBooking
 from app.exceptions import RoomCannotBeBooked
@@ -32,6 +33,7 @@ async def add_booking(
     if not booking:
         raise RoomCannotBeBooked
     booking = parse_obj_as(SNewBooking, booking).dict()
+    send_booking_confirmation_email.delay(booking, user.email)
     return booking
 
 

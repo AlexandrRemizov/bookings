@@ -10,7 +10,7 @@ from app.config import settings
 from app.users.router import router_auth, router_users
 from app.bookings.router import router as router_bookings
 from app.hotels.router import router as router_hotels
-
+from app.images.router import router as router_images
 from app.logger import logger
 
 app = FastAPI(
@@ -23,6 +23,8 @@ app.include_router(router_users)
 app.include_router(router_hotels)
 app.include_router(router_bookings)
 
+
+app.include_router(router_images)
 # origins = [
 #    "http://localhost:3000",
 # ]
