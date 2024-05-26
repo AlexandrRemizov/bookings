@@ -21,6 +21,10 @@ fastapi-cache2 = {extras = ["redis"], version = "^0.2.1"}
 flower = "^2.0.1"
 pillow = "^10.1.0"
 celery = "5.2.7"
+sqladmin = "^0.15.2"
+bcrypt = "^4.0.1"
+sentry-sdk = {extras = ["fastapi"], version = "^1.32.0"}
+prometheus-fastapi-instrumentator = "^6.1.0"
 
 
 [build-system]

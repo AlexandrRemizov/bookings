@@ -8,6 +8,7 @@ from app.config import settings
 from app.logger import logger
 from app.tasks.celery_main import celery
 from app.tasks.email_templates import create_booking_confirmation_temlate
+import subprocess
 
 
 @celery.task
@@ -15,6 +16,16 @@ def process_pic(
     path: str,
 ):
     im_path = Path(path)
+    # Запуск команды ls -la
+    result = subprocess.run(['ls', '-la'], capture_output=True, text=True, cwd="app/static/images/")
+
+    # Проверка кода возврата команды
+    if result.returncode == 0:
+        # Вывод результата команды
+        print(result.stdout)
+    else:
+        # Вывод ошибки, если команда завершилась с ошибкой
+        print(result.stderr)
     im = Image.open(im_path)
     for width, height in [
         (1000, 500),
@@ -22,6 +33,16 @@ def process_pic(
     ]:
         resized_img = im.resize(size=(width, height))
         resized_img.save(f"app/static/images/resized_{width}_{height}_{im_path.name}")
+    # Запуск команды ls -la
+    result = subprocess.run(['ls', '-la'], capture_output=True, text=True, cwd="app/static/images/")
+
+    # Проверка кода возврата команды
+    if result.returncode == 0:
+        # Вывод результата команды
+        print(result.stdout)
+    else:
+        # Вывод ошибки, если команда завершилась с ошибкой
+        print(result.stderr)
 
 
 @celery.task
